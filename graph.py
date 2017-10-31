@@ -1,6 +1,5 @@
 import networkx as nx
-#import matplotlib.pyplot as plt
-
+# import matplotlib.pyplot as plt
 
 def remove_prefix(text, prefix):
     if text.startswith(prefix):
@@ -15,25 +14,25 @@ with open('event_dump') as f:
 
 people = data.split("\n======\n")
 for p in people:
-    p = p.split("\n")
+    p = p.strip().split("\n")
     name = p[0]
-    if name in ["\t",""]:
-        print("ERROR",p)
+    if name in ["\t", ""] or len(p) > 2:
+        raise RuntimeError("Some invalid event data was provided: ", p)
+
     G.add_node(name)
     if len(p) == 2:
         inviter = remove_prefix(p[1], 'Invited by ')
     else:
         inviter = 'Chris Varenhorst'
-    if name not in ['Chris Varenhorst', 'Yan XZ', 'Rachel Fong','Doppel Ganger','Michael Borel']:
+    if name not in ['Chris Varenhorst', 'Yan XZ', 'Rachel Fong', 'Doppel Ganger', 'Michael Borel']:
         G.add_node(inviter)
         G.add_edge(inviter, name)
-        
 
-#print(G.nodes)
-#print(G.edges)
-#nx.draw_networkx_labels(G, pos=nx.spring_layout(G))
-#plt.show()
-for x in range(1,500):
+# print(G.nodes)
+# print(G.edges)
+# nx.draw_networkx_labels(G, pos=nx.spring_layout(G))
+# plt.show()
+for x in range(1, 500):
     lpath = nx.dag_longest_path(G)
     print(' --> '.join(lpath))
     G.remove_node(lpath[-1])
