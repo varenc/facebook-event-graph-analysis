@@ -16,16 +16,18 @@ for p in people:
     G.add_node(name)
     if len(p) == 2:
         inviter = p[1].lstrip("Invited by")
-    elif name != 'Chris Varenhorst':
+    else:
         inviter = 'Chris Varenhorst'
-    G.add_node(inviter)
-    G.add_edge(inviter, name)
+    if name not in ['Chris Varenhorst', 'Yan XZ', 'Rachel Fong','Doppel Ganger','Michael Borel']:
+        G.add_node(inviter)
+        G.add_edge(inviter, name)
         
 
 #print(G.nodes)
 #print(G.edges)
 #nx.draw_networkx_labels(G, pos=nx.spring_layout(G))
 #plt.show()
-lpath = nx.dag_longest_path(G)
-print('Longest invite path:', ' --> '.join(lpath))
-    
+for x in range(1,500):
+    lpath = nx.dag_longest_path(G)
+    print(' --> '.join(lpath))
+    G.remove_node(lpath[-1])
