@@ -1,6 +1,12 @@
 import networkx as nx
 #import matplotlib.pyplot as plt
 
+
+def remove_prefix(text, prefix):
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    return text
+
 G = nx.DiGraph()
 
 # I pre-processed this event data manually with some regexes
@@ -15,7 +21,7 @@ for p in people:
         print("ERROR",p)
     G.add_node(name)
     if len(p) == 2:
-        inviter = p[1].lstrip("Invited by")
+        inviter = remove_prefix(p[1], 'Invited by ')
     else:
         inviter = 'Chris Varenhorst'
     if name not in ['Chris Varenhorst', 'Yan XZ', 'Rachel Fong','Doppel Ganger','Michael Borel']:
