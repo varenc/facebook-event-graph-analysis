@@ -24,6 +24,8 @@ for p in people:
         inviter = remove_prefix(p[1], 'Invited by ')
     else:
         inviter = 'Chris Varenhorst'
+
+    # these are the event hosts and are the roots of all invites
     if name not in ['Chris Varenhorst', 'Yan XZ', 'Rachel Fong', 'Doppel Ganger', 'Michael Borel']:
         G.add_node(inviter)
         G.add_edge(inviter, name)
